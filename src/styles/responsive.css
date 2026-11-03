@@ -125,10 +125,12 @@
     padding: 4px 0 0;
   }
 
-  .hero-badge {
-    font-size: 11px;
-    padding: 5px 12px;
+  .hero-telemetry {
+    font-size: 11.5px;
     margin-bottom: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
   }
 
   .hero-title {

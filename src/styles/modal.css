@@ -67,13 +67,9 @@
 .modal-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--accent-emerald);
-  background: var(--accent-emerald-bg);
-  padding: 5px 12px;
-  border-radius: 999px;
+  color: var(--accent-emerald-soft);
   margin-bottom: 14px;
 }
 
