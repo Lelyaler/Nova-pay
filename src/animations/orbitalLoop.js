@@ -45,10 +45,24 @@ export class OrbitalLoop {
     this.isFlipped = false;
     this.inspectBar = document.getElementById('orbit-inspect-bar');
     this.closeBtn = document.getElementById('inspect-close-btn');
+    this.isVisible = true;
 
     this.initEvents();
+    this.initVisibility();
     this.animate = this.animate.bind(this);
     requestAnimationFrame(this.animate);
+  }
+
+  initVisibility() {
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        this.isVisible = entry.isIntersecting;
+        if (this.isVisible) {
+          this.lastFrameTime = performance.now();
+        }
+      }, { threshold: 0.05 });
+      observer.observe(this.stage);
+    }
   }
 
   updateDimensions() {
@@ -229,6 +243,7 @@ export class OrbitalLoop {
 
   animate() {
     requestAnimationFrame(this.animate);
+    if (!this.isVisible) return;
 
     const now = performance.now();
     const delta = Math.min(0.1, (now - this.lastFrameTime) * 0.001);

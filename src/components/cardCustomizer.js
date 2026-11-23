@@ -2,6 +2,39 @@ import confetti from 'canvas-confetti';
 import gsap from 'gsap';
 import { HolographicFoil } from '../animations/holographicFoil.js';
 
+const MATERIAL_MAP = {
+  obsidian: {
+    name: 'Midnight Obsidian',
+    label: 'OBSIDIAN',
+    video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_171347_f640c30d-ec21-426a-98bc-77e07c2c60cb.mp4',
+    number: '•••• •••• •••• 5590'
+  },
+  titanium: {
+    name: 'Brushed Titanium',
+    label: 'TITANIUM',
+    video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260506_030111_a9e15665-d379-4a7f-8116-695bbe452ad1.mp4',
+    number: '•••• •••• •••• 8814'
+  },
+  emerald: {
+    name: 'Racing Emerald',
+    label: 'EMERALD',
+    video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_104800_bc43ae09-f494-43e3-97d7-2f8c1692cfd7.mp4',
+    number: '•••• •••• •••• 3210'
+  },
+  hologram: {
+    name: 'Prism Hologram',
+    label: 'HOLOGRAM',
+    video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260423_161253_c72b1869-400f-45ed-ac0c-52f68c2ed5bd.mp4',
+    number: '•••• •••• •••• 4921'
+  },
+  aurora: {
+    name: 'Aurora SEPA',
+    label: 'AURORA',
+    video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_115655_b4d9cd77-feed-43cd-a198-af78ebdf1f7a.mp4',
+    number: '•••• •••• •••• 2468'
+  }
+};
+
 export class CardCustomizer {
   constructor(containerEl) {
     this.container = containerEl;
@@ -15,6 +48,9 @@ export class CardCustomizer {
 
   initElements() {
     this.cardEl = this.container.querySelector('#custom-card-preview');
+    this.videoEl = this.container.querySelector('#custom-card-video');
+    this.brandEl = this.container.querySelector('#custom-card-brand');
+    this.numEl = this.container.querySelector('#custom-card-number');
     this.nameInput = this.container.querySelector('#cardholder-name-input');
     this.cardholderLabel = this.container.querySelector('#card-name-display');
     this.materialButtons = this.container.querySelectorAll('.mat-btn');
@@ -95,22 +131,15 @@ export class CardCustomizer {
       });
     }
 
-    const MATERIAL_NAMES = {
-      obsidian: 'Midnight Obsidian',
-      platinum: 'Brushed Titanium',
-      emerald: 'Racing Emerald',
-      sapphire: 'Royal Sapphire',
-      hologram: 'Prism Hologram'
-    };
-
     if (this.orderBtn) {
       this.orderBtn.addEventListener('click', () => {
         const holderName = this.nameInput && this.nameInput.value.trim() ? this.nameInput.value.trim() : 'ALEXANDER VORONOV';
+        const matConfig = MATERIAL_MAP[this.currentMaterial] || MATERIAL_MAP.obsidian;
         document.dispatchEvent(new CustomEvent('nova:open-order-modal', {
           detail: {
             cardholder: holderName,
             materialKey: this.currentMaterial,
-            materialName: MATERIAL_NAMES[this.currentMaterial] || 'Midnight Obsidian'
+            materialName: matConfig.name
           }
         }));
       });
@@ -119,7 +148,24 @@ export class CardCustomizer {
 
   setMaterial(matKey) {
     this.currentMaterial = matKey;
-    this.cardEl.className = `custom-card-body card-mat-${matKey}`;
+    const config = MATERIAL_MAP[matKey] || MATERIAL_MAP.obsidian;
+
+    if (this.cardEl) {
+      this.cardEl.className = `custom-card-body card-mat-${matKey}`;
+    }
+
+    if (this.videoEl && config.video) {
+      this.videoEl.src = config.video;
+      this.videoEl.play().catch(() => {});
+    }
+
+    if (this.brandEl) {
+      this.brandEl.innerHTML = `NOVA <b>${config.label}</b>`;
+    }
+
+    if (this.numEl) {
+      this.numEl.textContent = config.number;
+    }
 
     gsap.fromTo(this.cardEl, 
       { scale: 0.96 }, 

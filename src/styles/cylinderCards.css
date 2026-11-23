@@ -1,0 +1,495 @@
+/* ==========================================================================
+   3D HORIZONTAL CYLINDER CAROUSEL - NOVA FINTECH DESIGN SYSTEM
+   ========================================================================== */
+
+.cylinder-carousel-section {
+  position: relative;
+  width: 100%;
+  padding: 40px 0 60px;
+  user-select: none;
+}
+
+/* Glassmorphic Panel Container aligned with Nova Card Surfaces */
+.cylinder-panel-card {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 36px 40px;
+  background: var(--bg-surface);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 28px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* Header within panel */
+.cylinder-header {
+  margin-bottom: 24px;
+}
+
+/* Category Switcher Tabs */
+.cylinder-nav-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 20;
+}
+
+.cylinder-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  font-family: var(--font-main);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.cylinder-tab-btn:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.cylinder-tab-btn.active {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+}
+
+.cylinder-tab-btn .tab-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.tab-dot.dot-titanium { background: #dcdcdc; box-shadow: 0 0 6px rgba(220, 220, 220, 0.6); }
+.tab-dot.dot-obsidian { background: #55555e; box-shadow: 0 0 6px rgba(85, 85, 94, 0.6); }
+.tab-dot.dot-emerald { background: #10b981; box-shadow: 0 0 6px rgba(16, 185, 129, 0.8); }
+.tab-dot.dot-hologram { background: #8b5cf6; box-shadow: 0 0 6px rgba(139, 92, 246, 0.8); }
+.tab-dot.dot-aurora { background: #38bdf8; box-shadow: 0 0 6px rgba(56, 189, 248, 0.8); }
+
+/* 3D Stage Container & Arrow Navigation */
+.cylinder-stage-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cylinder-arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(26, 26, 32, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 40;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.cylinder-arrow-btn.prev {
+  left: 10px;
+}
+
+.cylinder-arrow-btn.next {
+  right: 10px;
+}
+
+.cylinder-arrow-btn:hover {
+  background: rgba(40, 40, 48, 0.95);
+  border-color: rgba(16, 185, 129, 0.6);
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.cylinder-arrow-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Carousel 3D Canvas Space */
+.cylinder-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: pan-y;
+  overflow: visible;
+}
+
+.cylinder-carousel-wrapper:active {
+  cursor: grabbing;
+}
+
+.cylinder-camera-space {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.cylinder-viewport-3d {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+/* Individual 3D Card */
+.cylinder-card-item {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+  will-change: transform;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.cylinder-card-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Volumetric 3D Slice Layers (simulation of dense credit card core) */
+.cylinder-card-slice {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: #1a1a20;
+}
+
+/* Front Face */
+.cylinder-card-front {
+  background-color: #0b0c10;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 24px 60px rgba(0, 0, 0, 0.85);
+}
+
+.cylinder-card-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.cylinder-card-front-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 22px 24px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.15) 50%, rgba(0, 0, 0, 0.45) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
+  color: #ffffff;
+}
+
+.cylinder-card-top-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cylinder-card-chip {
+  width: 38px;
+  height: 38px;
+}
+
+.cylinder-card-chip svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.6));
+}
+
+.cylinder-card-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.cylinder-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+}
+
+.cylinder-brand-logo svg {
+  color: var(--accent-emerald);
+}
+
+.cylinder-card-tier {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+.cylinder-card-num-preview {
+  font-family: 'JetBrains Mono', var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+  margin: auto 0;
+}
+
+.cylinder-card-bottom-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cylinder-card-holder-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cylinder-card-holder-meta .meta-label {
+  font-family: var(--font-main);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.cylinder-card-holder-meta .meta-name {
+  font-family: 'JetBrains Mono', var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.cylinder-card-intersecting-circles {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 34px;
+  height: 22px;
+}
+
+.cylinder-card-intersecting-circles .circle-c1,
+.cylinder-card-intersecting-circles .circle-c2 {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.cylinder-card-intersecting-circles .circle-c1 {
+  left: 0;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.cylinder-card-intersecting-circles .circle-c2 {
+  right: 0;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Back Face */
+.cylinder-card-back {
+  background-color: #0d0e12;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 24px 60px rgba(0, 0, 0, 0.85);
+}
+
+.cylinder-card-back-blur {
+  position: absolute;
+  inset: 0;
+  filter: blur(18px);
+  transform: scale(1.2);
+  pointer-events: none;
+}
+
+.cylinder-card-magstripe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 24px;
+  height: 42px;
+  background: rgba(0, 0, 0, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 10;
+}
+
+.cylinder-card-back-meta {
+  position: absolute;
+  left: 24px;
+  bottom: 30px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-family: 'JetBrains Mono', var(--font-mono);
+  text-align: left;
+}
+
+.cylinder-card-back-number {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.cylinder-card-back-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.back-name {
+  text-transform: uppercase;
+}
+
+.back-dot {
+  opacity: 0.5;
+}
+
+.back-cvv {
+  color: var(--accent-emerald-soft);
+  font-weight: 600;
+}
+
+.cylinder-card-legal {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 12px;
+  font-family: var(--font-main);
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  z-index: 20;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Bottom Controls & Hints */
+.cylinder-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.cylinder-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.cylinder-hint svg {
+  color: var(--accent-emerald);
+}
+
+.cylinder-flip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cylinder-flip-btn:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.cylinder-flip-btn svg {
+  color: var(--accent-emerald);
+}
+
+@media (max-width: 768px) {
+  .cylinder-panel-card {
+    padding: 32px 18px 24px;
+    border-radius: 20px;
+  }
+
+  .cylinder-carousel-wrapper {
+    height: 360px;
+  }
+
+  .cylinder-bottom-bar {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cylinder-arrow-btn {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -1,5 +1,6 @@
 import './style.css';
 import { OrbitalLoop } from './animations/orbitalLoop.js';
+import { CylinderCardsCarousel } from './animations/cylinderCardsCarousel.js';
 import { NFCTerminal } from './components/nfcTerminal.js';
 import { ExchangeCalculator } from './components/exchange.js';
 import { CardCustomizer } from './components/cardCustomizer.js';
@@ -17,6 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const orbitalStage = document.getElementById('orbital-stage');
   if (orbitalStage) {
     new OrbitalLoop(orbitalStage);
+  }
+
+  const cylinderStage = document.getElementById('cylinder-stage');
+  if (cylinderStage) {
+    new CylinderCardsCarousel(cylinderStage);
   }
 
   const initDeferredComponents = () => {

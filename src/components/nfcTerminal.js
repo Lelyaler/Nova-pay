@@ -188,28 +188,55 @@ export class NFCTerminal {
     card.className = 'nfc-floating-card';
     const logo = card.querySelector('#nfc-card-logo');
     const number = card.querySelector('#nfc-card-number');
+    const video = card.querySelector('#nfc-card-video');
     const rcCard = this.container.querySelector('#rc-card');
 
-    if (theme === 'titanium') {
-      card.classList.add('card-platinum');
-      if (logo) logo.innerHTML = 'NOVA <b>TITANIUM</b>';
-      if (number) number.textContent = '•••• 8814';
-      if (rcCard) rcCard.textContent = 'NOVA TITANIUM (•••• 8814)';
-    } else if (theme === 'obsidian') {
-      card.classList.add('card-obsidian');
-      if (logo) logo.innerHTML = 'NOVA <b>BLACK</b>';
-      if (number) number.textContent = '•••• 4921';
-      if (rcCard) rcCard.textContent = 'NOVA BLACK (•••• 4921)';
-    } else if (theme === 'emerald') {
-      card.classList.add('card-emerald');
-      if (logo) logo.innerHTML = 'NOVA <b>EMERALD</b>';
-      if (number) number.textContent = '•••• 3210';
-      if (rcCard) rcCard.textContent = 'NOVA EMERALD (•••• 3210)';
-    } else if (theme === 'hologram') {
-      card.classList.add('card-hologram');
-      if (logo) logo.innerHTML = 'NOVA <b>PRISM</b>';
-      if (number) number.textContent = '•••• 7701';
-      if (rcCard) rcCard.textContent = 'NOVA PRISM HOLO (•••• 7701)';
+    const NFC_THEMES = {
+      titanium: {
+        cls: 'card-platinum',
+        title: 'TITANIUM',
+        num: '•••• 8814',
+        rc: 'NOVA TITANIUM (•••• 8814)',
+        video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260506_030111_a9e15665-d379-4a7f-8116-695bbe452ad1.mp4'
+      },
+      obsidian: {
+        cls: 'card-obsidian',
+        title: 'OBSIDIAN',
+        num: '•••• 5590',
+        rc: 'NOVA OBSIDIAN (•••• 5590)',
+        video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260429_171347_f640c30d-ec21-426a-98bc-77e07c2c60cb.mp4'
+      },
+      emerald: {
+        cls: 'card-emerald',
+        title: 'EMERALD',
+        num: '•••• 3210',
+        rc: 'NOVA EMERALD (•••• 3210)',
+        video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260503_104800_bc43ae09-f494-43e3-97d7-2f8c1692cfd7.mp4'
+      },
+      hologram: {
+        cls: 'card-hologram',
+        title: 'HOLOGRAM',
+        num: '•••• 4921',
+        rc: 'NOVA HOLOGRAM (•••• 4921)',
+        video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260423_161253_c72b1869-400f-45ed-ac0c-52f68c2ed5bd.mp4'
+      },
+      aurora: {
+        cls: 'card-aurora',
+        title: 'AURORA',
+        num: '•••• 2468',
+        rc: 'NOVA AURORA (•••• 2468)',
+        video: 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_115655_b4d9cd77-feed-43cd-a198-af78ebdf1f7a.mp4'
+      }
+    };
+
+    const cfg = NFC_THEMES[theme] || NFC_THEMES.titanium;
+    card.classList.add(cfg.cls);
+    if (logo) logo.innerHTML = `NOVA <b>${cfg.title}</b>`;
+    if (number) number.textContent = cfg.num;
+    if (rcCard) rcCard.textContent = cfg.rc;
+    if (video && cfg.video) {
+      video.src = cfg.video;
+      video.play().catch(() => {});
     }
 
     gsap.fromTo(card,

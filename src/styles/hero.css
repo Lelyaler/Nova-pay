@@ -338,15 +338,15 @@
 /* Card Themes */
 .card-platinum .card-inner,
 .card-platinum .card-face {
-  background: #e2e8f0;
+  background: #0b0c10;
   box-shadow: 
-    0 26px 52px -12px rgba(0, 0, 0, 0.45),
-    0 4px 12px rgba(0, 0, 0, 0.2),
-    inset 0 1px 1px rgba(255, 255, 255, 0.9);
-  color: #0f172a;
+    0 26px 52px -12px rgba(0, 0, 0, 0.7),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  color: #ffffff;
 }
 .card-platinum .card-back {
-  background: #cbd5e1;
+  background: #0b0c10;
 }
 .card-platinum .card-inner .card-holo-foil {
   display: none !important;
@@ -355,10 +355,26 @@
   mix-blend-mode: overlay;
   opacity: 0.55;
 }
-.card-platinum .c-lbl { color: #475569; font-weight: 700; }
-.card-platinum .c-val { color: #090a0f; font-weight: 800; }
-.card-platinum .card-bottom { color: #334155; font-weight: 600; }
-.card-platinum .card-logo { color: #090a0f; font-weight: 800; }
+.card-platinum .c-lbl { 
+  color: rgba(255, 255, 255, 0.75); 
+  font-weight: 600; 
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+.card-platinum .c-val { 
+  color: #ffffff !important; 
+  font-weight: 800; 
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+}
+.card-platinum .card-bottom { 
+  color: rgba(255, 255, 255, 0.95); 
+  font-weight: 600; 
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+.card-platinum .card-logo { 
+  color: #ffffff; 
+  font-weight: 800; 
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
 
 .card-obsidian .card-inner,
 .card-obsidian .card-face {
@@ -597,3 +613,170 @@
   100% { color: inherit; text-shadow: none; }
 }
 
+
+/* ==========================================================================
+   VIDEO CARD UNIFIED COMPONENT (HERO, NFC, CUSTOMIZER)
+   ========================================================================== */
+
+.card-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-front-content {
+  position: absolute;
+  inset: 0;
+  padding: 22px 24px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.12) 50%, rgba(0, 0, 0, 0.45) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 5;
+  color: #ffffff;
+}
+
+.card-chip-svg {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-chip-svg svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.6));
+}
+
+.card-intersecting-circles {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 32px;
+  height: 20px;
+}
+
+.card-intersecting-circles .circle-c1,
+.card-intersecting-circles .circle-c2 {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.card-intersecting-circles .circle-c1 {
+  left: 0;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.card-intersecting-circles .circle-c2 {
+  right: 0;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Card Back Design with Video Blur */
+.card-back-blur {
+  position: absolute;
+  inset: 0;
+  filter: blur(16px);
+  transform: scale(1.18);
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.card-back .card-magstripe {
+  position: relative;
+  width: 100%;
+  height: 38px;
+  background: rgba(0, 0, 0, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 5;
+  margin-top: 4px;
+}
+
+.card-back .card-back-meta {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 24px;
+  font-family: 'JetBrains Mono', var(--font-mono);
+  text-align: left;
+}
+
+.card-back-number {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.card-back-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.card-back-sub .back-name {
+  text-transform: uppercase;
+}
+
+.card-back-sub .back-dot {
+  opacity: 0.5;
+}
+
+.card-back-sub .back-cvv {
+  color: var(--accent-emerald-soft);
+  font-weight: 600;
+}
+
+.dot-titanium { background: #dcdcdc !important; box-shadow: 0 0 6px rgba(220, 220, 220, 0.6) !important; }
+.dot-obsidian { background: #55555e !important; box-shadow: 0 0 6px rgba(85, 85, 94, 0.6) !important; }
+.dot-emerald  { background: #10b981 !important; box-shadow: 0 0 6px rgba(16, 185, 129, 0.8) !important; }
+.dot-hologram { background: #8b5cf6 !important; box-shadow: 0 0 6px rgba(139, 92, 246, 0.8) !important; }
+.dot-aurora   { background: #38bdf8 !important; box-shadow: 0 0 6px rgba(56, 189, 248, 0.8) !important; }
+
+/* Customizer Card Overlay Content */
+.custom-card-content {
+  position: absolute;
+  inset: 0;
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 6;
+  color: #ffffff;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.45) 100%);
+}
+
+.custom-card-body {
+  padding: 0 !important;
+}
+
+.custom-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.custom-card-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
